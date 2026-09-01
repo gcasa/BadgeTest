@@ -1,0 +1,13 @@
+{
+    CFBundleDevelopmentRegion = English;
+    CFBundleExecutable = BadgeTest;
+    CFBundleIdentifier = "org.gnustep.tests.BadgeTest";
+    CFBundleIconFile = "BadgeTestIcon.tiff";
+    CFBundleInfoDictionaryVersion = "6.0";
+    CFBundleName = BadgeTest;
+    CFBundlePackageType = APPL;
+    CFBundleShortVersionString = "1.0";
+    CFBundleVersion = 1;
+    NSIcon = "BadgeTestIcon.tiff";
+    NSPrincipalClass = NSApplication;
+}

@@ -1,0 +1,18 @@
+{
+    CFBundleDevelopmentRegion = English;
+    CFBundleExecutable = BadgeTest;
+    CFBundleIconFile = "BadgeTestIcon.tiff";
+    CFBundleIdentifier = "org.gnustep.tests.BadgeTest";
+    CFBundleInfoDictionaryVersion = "6.0";
+    CFBundleName = BadgeTest;
+    CFBundlePackageType = APPL;
+    CFBundleShortVersionString = "1.0";
+    CFBundleVersion = 1;
+    GSMainMarkupFile = "";
+    NOTE = "Automatically generated, do not edit!";
+    NSExecutable = BadgeTest;
+    NSIcon = "BadgeTestIcon.tiff";
+    NSMainNibFile = "";
+    NSMainStoryboardFile = "";
+    NSPrincipalClass = NSApplication;
+}
