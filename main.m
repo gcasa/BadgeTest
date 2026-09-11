@@ -12,6 +12,7 @@
   NSTextField *_statusLabel;
   NSButton *_showsBadgeButton;
   NSInteger _badgeValue;
+  NSInteger _attentionRequest;
 }
 @end
 
@@ -54,10 +55,11 @@
   NSString *status;
 
   status = [NSString stringWithFormat:
-    @"dockTile=%@  badgeLabel=%@  showsApplicationBadge=%@",
+    @"dockTile=%@  badgeLabel=%@  showsApplicationBadge=%@  attentionRequest=%ld",
     tile ? @"yes" : @"no",
     [tile badgeLabel] ? [tile badgeLabel] : @"(nil)",
-    [tile showsApplicationBadge] ? @"YES" : @"NO"];
+    [tile showsApplicationBadge] ? @"YES" : @"NO",
+    (long)_attentionRequest];
   [_statusLabel setStringValue: status];
 
   NSLog(@"BadgeTest set NSDockTile badge label to %@",
@@ -104,6 +106,23 @@
   [self applyBadgeFromField: sender];
 }
 
+- (void) requestAttention: (id)sender
+{
+  _attentionRequest = [NSApp requestUserAttention: NSInformationalRequest];
+  [self updateStatusWithBadge: [_badgeField stringValue]];
+
+  NSLog(@"BadgeTest requested user attention: %ld", (long)_attentionRequest);
+}
+
+- (void) cancelAttention: (id)sender
+{
+  [NSApp cancelUserAttentionRequest: _attentionRequest];
+  _attentionRequest = 0;
+  [self updateStatusWithBadge: [_badgeField stringValue]];
+
+  NSLog(@"BadgeTest cancelled user attention request");
+}
+
 - (void) createMenu
 {
   NSMenu *mainMenu = [[[NSMenu alloc] initWithTitle: @"Main Menu"] autorelease];
@@ -129,9 +148,11 @@
   NSButton *applyButton;
   NSButton *incrementButton;
   NSButton *clearButton;
+  NSButton *attentionButton;
+  NSButton *cancelAttentionButton;
 
   _window = [[NSWindow alloc]
-    initWithContentRect: NSMakeRect(300, 300, 440, 190)
+    initWithContentRect: NSMakeRect(300, 300, 520, 230)
 	      styleMask: (NSTitledWindowMask
 			  | NSClosableWindowMask
 			  | NSMiniaturizableWindowMask)
@@ -173,7 +194,17 @@
   [content addSubview: _showsBadgeButton];
   [_showsBadgeButton release];
 
-  _statusLabel = [[NSTextField alloc] initWithFrame: NSMakeRect(20, 25, 400, 24)];
+  attentionButton = [self buttonWithFrame: NSMakeRect(20, 35, 150, 30)
+				    title: @"Request Attention"
+				   action: @selector(requestAttention:)];
+  [content addSubview: attentionButton];
+
+  cancelAttentionButton = [self buttonWithFrame: NSMakeRect(185, 35, 135, 30)
+					  title: @"Cancel Attention"
+					 action: @selector(cancelAttention:)];
+  [content addSubview: cancelAttentionButton];
+
+  _statusLabel = [[NSTextField alloc] initWithFrame: NSMakeRect(20, 10, 480, 20)];
   [_statusLabel setBezeled: NO];
   [_statusLabel setDrawsBackground: NO];
   [_statusLabel setEditable: NO];
